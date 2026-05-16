@@ -1,0 +1,76 @@
+name: Build Anki Addon
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      
+      - name: Build addon
+        run: python3 build.py
+      
+      - name: Check if .ankiaddon was created
+        run: |
+          if [ -f heatmap_selector.ankiaddon ]; then
+            echo "✅ Build successful!"
+            ls -lh heatmap_selector.ankiaddon
+          else
+            echo "❌ Build failed - .ankiaddon file not found"
+            exit 1
+          fi
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: heatmap_selector
+          path: heatmap_selector.ankiaddon
+          retention-days: 30
+      
+      - name: Create Release (on main push)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "heatmap_selector.ankiaddon"
+          tag: "v2.0.0-${{ github.run_number }}"
+          name: "Review Heatmap v2.0.0 Build #${{ github.run_number }}"
+          body: |
+            ## 🚀 Anki Review Heatmap with Date Selector
+            
+            **Version:** 2.0.0
+            **Build:** ${{ github.run_number }}
+            
+            ### Features
+            - 📊 Interactive 3-year heatmap (1095 days)
+            - 🎯 Click to select/deselect review dates
+            - 🎨 Blue gradient color coding
+            - 📅 Time range controls (1-36 months)
+            - 💾 Save & export selected dates
+            - 📈 Review statistics
+            
+            ### Installation
+            1. Download `heatmap_selector.ankiaddon`
+            2. Open Anki → Tools → Add-ons → Install from file
+            3. Select the downloaded file → Restart Anki
+            4. Tools → Show Review Heatmap
+          draft: false
+          prerelease: false
+          allowUpdates: true
+          makeLatest: true
