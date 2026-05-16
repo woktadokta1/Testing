@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "author": "WoktaDoktaMake",
+  "settings": {
+    "max_selections": 10000,
+    "max_reviews_per_day": 5000,
+    "history_months": 36,
+    "enable_logging": true
+  }
+}

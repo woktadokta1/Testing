@@ -1,0 +1,14 @@
+{
+  "package": "heatmap_selector",
+  "name": "Review Heatmap with Date Selector",
+  "mod": 1715682132,
+  "author": "WoktaDoktaMake",
+  "url": "https://ankiweb.net",
+  "description": "Interactive review heatmap with blue gradient, date selection, and 3-year history. Max 5000 reviews per day.",
+  "conflicts": [],
+  "disabled": false,
+  "min_point_version": 50,
+  "max_point_version": 99,
+  "branch_index": 0,
+  "version": "2.0.0"
+}
