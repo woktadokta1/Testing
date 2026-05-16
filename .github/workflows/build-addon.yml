@@ -17,7 +17,7 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -38,7 +38,7 @@ jobs:
           fi
       
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: heatmap_selector
           path: heatmap_selector.ankiaddon
@@ -70,6 +70,10 @@ jobs:
             2. Open Anki → Tools → Add-ons → Install from file
             3. Select the downloaded file → Restart Anki
             4. Tools → Show Review Heatmap
+            
+            ### Requirements
+            - Anki 2.1.50+
+            - Python 3.6+
           draft: false
           prerelease: false
           allowUpdates: true
